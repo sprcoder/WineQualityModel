@@ -1,0 +1,36 @@
+{# TODO DO NOT EDIT #}
+{% extends "layout.html" %}
+{% block title %}Import Data{% endblock %}
+{% block content %}
+<div class="container-fluid">
+  <div class="h1 text-center text-warning">Assignment 2</div>
+  <div class="w-50 mx-auto bg-light text-center caption border">
+      Wine Quality Prediction 
+  </div>
+</div>
+<div class="container-fluid">
+    <div class="h3">Start Prediction</div>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                <label class="form-label" for="n">Search File</label>
+                <input class="form-control" id="n" name="file" type="file" />
+            </div>
+            <input type="submit" class="btn btn-primary" value="Import" />
+        </form>
+        {% if val > 0 %}
+        Prediction Model Result
+        <div class="row">
+          <div class="col">
+            F1 Score:
+          </div>
+          <div class="col">
+            {{val}}
+          </div>
+        </div>
+        {% else %}
+        No Prediction Model Result
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

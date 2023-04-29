@@ -53,4 +53,8 @@ spark-submit --deploy-mode client --master spark://{master-instance}:7077 wq_tra
 * Model is loaded as a RandomForestClassificationModel and tested with the validation data set.
 * The result shows the F1 score of the validation data set.
 
+#### Github link
+https://github.com/sprcoder/Wine_Quality_Prediction
 
+#### DockerHub link
+https://hub.docker.com/repository/docker/sr2484/sparkml_pa2/general
