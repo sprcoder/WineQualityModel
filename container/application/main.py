@@ -15,8 +15,6 @@ def create_app(config_filename=''):
         app.register_blueprint(admin)
         from views.index import home
         app.register_blueprint(home)
-        from views.wq_testmodel_docker import model
-        app.register_blueprint(model)
     return app
 
 app = create_app()

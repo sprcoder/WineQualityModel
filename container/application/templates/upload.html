@@ -19,17 +19,10 @@
             <input type="submit" class="btn btn-primary" value="Import" />
         </form>
         {% if val > 0 %}
-        Prediction Model Result
-        <div class="row">
-          <div class="col">
-            F1 Score:
-          </div>
-          <div class="col">
-            {{val}}
-          </div>
-        </div>
+        <h3>Prediction result</h3>
+          F1 Score: {{val}}
         {% else %}
-        No Prediction Model Result
+        No Prediction Result
         {% endif %}
     </div>
 </div>

@@ -35,7 +35,15 @@ Using MLLib in Spark to train a ML model for wine quality prediction.
 ```
 spark-submit --deploy-mode client --master spark://{master-instance}:7077 wq_trainmodel.py
 ```
-
+* Files available in github
+  * `wq_trainmodel.py` - For taining the model using TrainingDataset.csv which is taken from s3 bucket.
+  Note: Please create a directory `data` before executing the following file.
+  * `wq_validatemodel.py` - Validates the model using ValidationDataset.csv which is taken from s3 bucket. Returns F1 score. 
+  * `wq_testmodel.py` - Takes one argument and gives the f1 score or accuracy for the test csv data provided.
+    * Argument can be "s3" if the file is taken from s3 bucket.
+    * Argument can be csv file used to test.
+  * `wq_testmodel_Local.py` - Can be implemented without hadoop file system.
+    
 ## Wine Quality Prediction Model Summary
 
 ### Training the model
@@ -56,5 +64,21 @@ spark-submit --deploy-mode client --master spark://{master-instance}:7077 wq_tra
 #### Github link
 https://github.com/sprcoder/Wine_Quality_Prediction
 
+## Docker Implementation
+
+* Created a flask application with integration of prediction model.
+* Image is preloaded with trained model, hence it can be deployed anywhere and only the csv file is required to be uploaded as input.
+* Dockerfile is placed at the root of the application with required commands to build the project.
+* Docker image is created using the command `docker build -t mlapp .`
+* Docker image is deployed using the command `docker run mlapp`
+* The application can be accessed from the browser with the host address.
+* Docker image is tagged to be uploaded to the dockerhub. `docker tag mlapp sr2484/sparkml_pa2:latest`
+* Docker image is pushed to dockerhub with the command `docker push sr2484/sparkml_pa2:latest`
+
+### Deploy docker image
+
+* Image can be pulled with the command `docker pull sr2484/sparkml_pa2:latest`
+* Run the docker run command `docker run -p 8000:80 sr2484/sparkml_pa2:latest`
+
 #### DockerHub link
-https://hub.docker.com/repository/docker/sr2484/sparkml_pa2/general
+https://hub.docker.com/r/sr2484/sparkml_pa2/tags
