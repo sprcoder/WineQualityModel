@@ -20,6 +20,8 @@ admin = Blueprint('admin', __name__, url_prefix='/')
 @admin.route("/", methods=["GET","POST"])
 def importCSV():
     val = 0
+    testvalue = ""
+    predict = ""
     args = {**request.args}
     if request.method == "POST":
         if 'file' not in request.files:
@@ -65,26 +67,26 @@ def importCSV():
         df = sqlContext.createDataFrame(df)
         columns = columns[:-1]
         assemblers = VectorAssembler(inputCols=columns, outputCol="features")
-        transOutput = assemblers.transform(df)
-
-        testData = transOutput.select("features","quality")
+        test_data = assemblers.transform(df)
 
         path = './views/model/'
 
         rf_model = RandomForestClassificationModel.load(path)
         print("Loaded model")
 
-        predictions = rf_model.transform(testData)
+        predictions = rf_model.transform(test_data)
 
         evaluator = MulticlassClassificationEvaluator(
             labelCol="quality", predictionCol="prediction", metricName="accuracy")
         accuracy = evaluator.evaluate(predictions)
         print("Accuracy of the results = %g " % (accuracy))
-        predictpandas = predictions.toPandas()
+        predictpandas = predictions.select('fixed_acidity','volatile_acidity','citric_acid','residual_sugar','chlorides','free_sulfur_dioxide','total_sulfur_dioxide','density','pH','sulphates','alcohol','quality','prediction').toPandas()
+        predict ="""<h3> Table View </h3>"""
+        predict += (predictpandas.to_html())
         print("f1 Score")
         val = f1_score(predictpandas["quality"], predictpandas["prediction"], average='micro')
         
         spark.stop()
         sc.stop()
 
-    return render_template("upload.html", val=val)
+    return render_template("upload.html", val=val, predict=predict)

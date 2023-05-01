@@ -2,12 +2,20 @@
 {% extends "layout.html" %}
 {% block title %}Import Data{% endblock %}
 {% block content %}
-<div class="container-fluid">
-  <div class="h1 text-center text-warning">Assignment 2</div>
-  <div class="w-50 mx-auto bg-light text-center caption border">
-      Wine Quality Prediction 
-  </div>
-</div>
+<style>
+  th {
+    padding: 2px;
+    text-align: center;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+  }
+  td {
+    text-align: center;
+    padding: 2px;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+  }
+</style>
 <div class="container-fluid">
     <div class="h3">Start Prediction</div>
     <div>
@@ -24,6 +32,9 @@
         {% else %}
         No Prediction Result
         {% endif %}
+        <div class="table table-hover">
+          {{predict|safe}}
+        </div>
     </div>
 </div>
 {% endblock %}
